@@ -1,0 +1,32 @@
+# .streamlit/config.toml
+# Smart Factory Assistant — Dark Industrial Theme
+# app.py'a dokunulmadan uygulanır.
+
+[theme]
+
+# ── Renkler ────────────────────────────────────────────────────
+# Ana arka plan (sidebar dahil)
+backgroundColor      = "#0D1117"
+
+# İkincil arka plan (widget'lar, expander'lar, sidebar)
+secondaryBackgroundColor = "#161B22"
+
+# Birincil vurgu rengi (buton, slider, aktif widget)
+primaryColor         = "#388BFD"
+
+# Ana metin rengi
+textColor            = "#E6EDF3"
+
+# ── Tipografi ───────────────────────────────────────────────────
+# Google Fonts değil, Streamlit'in desteklediği sistem fontları
+font                 = "sans serif"
+
+
+[server]
+# Hot-reload aktif (geliştirme için)
+runOnSave            = true
+
+
+[browser]
+# Tarayıcı sekmesi başlığı
+serverAddress        = "localhost"
