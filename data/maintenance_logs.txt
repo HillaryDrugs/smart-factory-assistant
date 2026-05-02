@@ -1,0 +1,29 @@
+Maintenance Log - Machine A1 - 2025-01-14
+Issue: Bearing temperature exceeded 90°C during continuous operation.
+Action: Replaced primary cooling fan and refilled lubricant. Monitored for 24h.
+Result: Temperature returned to normal range (60-75°C). No further alarms.
+
+Maintenance Log - Machine B2 - 2025-02-03
+Issue: High vibration (8.2 mm/s) detected on motor shaft.
+Action: Performed laser shaft alignment and rebalanced rotor.
+Result: Vibration dropped to 2.1 mm/s. Recommended re-check after 500 operating hours.
+
+Maintenance Log - Machine C3 - 2025-02-19
+Issue: Pressure dropped below 1.5 bar in hydraulic line.
+Action: Inspected pipes, found a leak at valve V-12. Replaced gasket.
+Result: Pressure stabilized at 4.2 bar.
+
+Maintenance Log - Machine A1 - 2025-03-08
+Issue: RPM fluctuating between 1200 and 2800 under steady load.
+Action: Updated motor controller firmware and re-tuned PID parameters.
+Result: RPM stable at target 2400 ± 30.
+
+Maintenance Log - Machine D4 - 2025-03-22
+Issue: Repeated overheating warnings during summer-like ambient (35°C).
+Action: Installed auxiliary fan and cleaned heat exchanger fins.
+Result: Operating temperature reduced by ~12°C.
+
+Maintenance Log - Machine B2 - 2025-04-10
+Issue: Mild vibration increase after bearing replacement.
+Action: Re-torqued mounting bolts to spec; verified alignment.
+Result: Vibration normalized within 3 days.

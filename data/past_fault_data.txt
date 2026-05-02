@@ -1,0 +1,35 @@
+Fault Case 001 - Overheating
+Symptoms: Temperature rising above 85°C, occasional thermal trips.
+Root cause: Clogged heat exchanger and weak cooling fan.
+Recommended action: Clean heat exchanger fins, test fan RPM under load,
+replace fan if airflow is below specification.
+
+Fault Case 002 - Excessive Vibration
+Symptoms: Vibration above 5 mm/s, audible humming, premature bearing wear.
+Root cause: Shaft misalignment combined with imbalanced rotor.
+Recommended action: Perform laser alignment, balance the rotor, and inspect
+bearing housing for cracks.
+
+Fault Case 003 - Pressure Loss
+Symptoms: System pressure drops below 2 bar during operation.
+Root cause: Worn valve seal causing internal leakage.
+Recommended action: Replace valve seal, inspect upstream filter, and verify
+pressure regulator setpoint.
+
+Fault Case 004 - RPM Instability
+Symptoms: Motor RPM oscillates outside the ±5% tolerance band.
+Root cause: Faulty encoder feedback or poorly tuned controller.
+Recommended action: Inspect encoder cable, replace if damaged, then re-tune
+PID gains starting from manufacturer defaults.
+
+Fault Case 005 - Combined Temperature + Vibration
+Symptoms: Both temperature and vibration exceed normal ranges simultaneously.
+Root cause: Bearing failure causing friction heat and mechanical imbalance.
+Recommended action: Stop the machine immediately. Replace bearing,
+flush lubrication system, and re-align shaft before restart.
+
+Fault Case 006 - Pressure + Temperature
+Symptoms: Pressure spikes accompanied by temperature creep.
+Root cause: Partial blockage in cooling line restricts flow.
+Recommended action: Flush cooling circuit, replace filter cartridges,
+and verify pump output.

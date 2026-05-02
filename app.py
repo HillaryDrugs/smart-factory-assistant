@@ -79,6 +79,20 @@ if run_button:
             for cause in result["diagnosis"]["suspected_causes"]:
                 st.write(f"- **{cause['sensor']}** — {cause['hint']}")
 
+        retrieved = result["diagnosis"].get("retrieved_context", [])
+        st.markdown("**📚 Retrieved Context (RAG):**")
+        if retrieved:
+            for i, ctx in enumerate(retrieved, start=1):
+                st.markdown(
+                    f"**{i}. Source:** `{ctx['source']}`  •  **Score:** {ctx['score']}"
+                )
+                st.write(ctx["text"])
+        else:
+            st.info(
+                "No retrieved context. Run `python -m rag.ingest_docs` "
+                "to build the knowledge base."
+            )
+
     with st.expander("🛠️ Solution Agent", expanded=True):
         st.write(f"**Solution:** {result['solution']['solution']}")
         for action in result["solution"]["actions"]:
