@@ -10,6 +10,19 @@ Run with:
 import streamlit as st
 
 from main import run_pipeline
+from ui.components import (
+    render_sensor_dashboard,
+    render_final_summary,
+    render_all_agents,
+    render_idle_state,
+)
+from ui.charts import (
+    make_all_gauges,
+    make_radar_chart,
+    make_abnormal_bar,
+    make_risk_indicator,
+)
+from ui.styles import get_css
 
 
 st.set_page_config(
@@ -39,72 +52,20 @@ sensor_data = {
 }
 
 # --- Main panel ---------------------------------------------------------------
-st.subheader("Sensor Data")
-st.json(sensor_data)
+st.markdown(get_css(), unsafe_allow_html=True)
+
+gauge_figs = make_all_gauges(sensor_data)
+radar_fig = make_radar_chart(sensor_data)
 
 if run_button:
     result = run_pipeline(sensor_data)
 
-    # Top-level final summary
-    st.subheader("Final Output")
-    final = result["final"]
+    render_sensor_dashboard(sensor_data, gauge_figs, radar_fig)
 
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Issue", final["issue"].split(":")[0])
-    col2.metric("Risk Level", final["risk_level"].upper())
-    col3.metric("Diagnosis", "Found" if result["sensor"]["abnormal_readings"] else "Healthy")
+    risk_fig = make_risk_indicator(result["risk"]["risk_level"])
+    render_final_summary(result, risk_fig)
 
-    # Risk badge
-    risk_level = result["risk"]["risk_level"]
-    if risk_level == "high":
-        st.error(f"⚠️ {result['risk']['risk_message']}")
-    elif risk_level == "medium":
-        st.warning(f"🟡 {result['risk']['risk_message']}")
-    else:
-        st.success(f"✅ {result['risk']['risk_message']}")
-
-    # Per-agent details
-    st.subheader("Agent Outputs")
-
-    with st.expander("🔎 Sensor Agent", expanded=True):
-        st.write(f"**Status:** {result['sensor']['status']}")
-        st.write(f"**Issue:** {result['sensor']['issue']}")
-        if result["sensor"]["abnormal_readings"]:
-            st.write("**Abnormal readings:**")
-            st.json(result["sensor"]["abnormal_readings"])
-
-    with st.expander("🩺 Diagnosis Agent", expanded=True):
-        st.write(f"**Diagnosis:** {result['diagnosis']['diagnosis']}")
-        if result["diagnosis"]["suspected_causes"]:
-            for cause in result["diagnosis"]["suspected_causes"]:
-                st.write(f"- **{cause['sensor']}** — {cause['hint']}")
-
-        retrieved = result["diagnosis"].get("retrieved_context", [])
-        st.markdown("**📚 Retrieved Context (RAG):**")
-        if retrieved:
-            for i, ctx in enumerate(retrieved, start=1):
-                st.markdown(
-                    f"**{i}. Source:** `{ctx['source']}`  •  **Score:** {ctx['score']}"
-                )
-                st.write(ctx["text"])
-        else:
-            st.info(
-                "No retrieved context. Run `python -m rag.ingest_docs` "
-                "to build the knowledge base."
-            )
-
-    with st.expander("🛠️ Solution Agent", expanded=True):
-        st.write(f"**Solution:** {result['solution']['solution']}")
-        for action in result["solution"]["actions"]:
-            st.write(f"- {action}")
-
-    with st.expander("⚙️ Optimization Agent", expanded=True):
-        st.write(f"**Optimization:** {result['optimization']['optimization']}")
-        for tip in result["optimization"]["suggestions"]:
-            st.write(f"- {tip}")
-
-    with st.expander("🛡️ Risk Agent", expanded=True):
-        st.write(f"**Risk level:** {result['risk']['risk_level'].upper()}")
-        st.write(f"**Message:** {result['risk']['risk_message']}")
+    abnormal_fig = make_abnormal_bar(result["sensor"].get("abnormal_readings") or {})
+    render_all_agents(result, abnormal_fig)
 else:
-    st.info("Adjust the sensor values in the sidebar and click **Run Analysis**.")
+    render_idle_state(sensor_data, gauge_figs, radar_fig)
